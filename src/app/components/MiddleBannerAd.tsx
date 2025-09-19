@@ -1,36 +1,58 @@
 "use client";
 import { useEffect } from "react";
 
+const AD_SLOT_MIDDLE = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MIDDLE || "";
+const TEST_MODE = process.env.NEXT_PUBLIC_ADSENSE_TEST === "1";
+
+/**
+ * MiddleBannerAd - AdSense-only
+ */
 export default function MiddleBannerAd() {
   useEffect(() => {
-    const container = document.getElementById("adsterra-middle");
-    if (container) container.innerHTML = "";
+    const container = document.getElementById("adsense-middle");
+    if (!container) return;
 
-    const script1 = document.createElement("script");
-    script1.type = "text/javascript";
-    script1.innerHTML = `
-      atOptions = {
-        'key' : 'f2a45588814667537f6ec1b264b2b65f',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    `;
+    container.innerHTML = "";
 
-    const script2 = document.createElement("script");
-    script2.type = "text/javascript";
-    script2.src = "//www.highperformanceformat.com/f2a45588814667537f6ec1b264b2b65f/invoke.js";
+    const ins = document.createElement("ins");
+    ins.className = "adsbygoogle";
+    ins.style.display = "block";
+    ins.setAttribute("data-ad-client", "ca-pub-9822891837132664");
+    if (AD_SLOT_MIDDLE) ins.setAttribute("data-ad-slot", AD_SLOT_MIDDLE);
+    ins.setAttribute("data-ad-format", "auto");
+    ins.setAttribute("data-full-width-responsive", "true");
+    if (TEST_MODE) ins.setAttribute("data-adtest", "on");
 
-    if (container) {
-      container.appendChild(script1);
-      container.appendChild(script2);
-    }
+    container.appendChild(ins);
+
+    const pushAd = () => {
+      try {
+        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
+        (window as any).adsbygoogle.push({});
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    pushAd();
+    let attempts = 0;
+    const maxAttempts = 6;
+    const intervalId = window.setInterval(() => {
+      attempts++;
+      if (pushAd() || attempts >= maxAttempts) {
+        window.clearInterval(intervalId);
+      }
+    }, 1000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
   }, []);
 
   return (
-    <div className="flex justify-center">
-      <div id="adsterra-middle" className="w-[320px] h-[50px]" />
+    <div className="flex justify-center w-full my-4">
+      <div id="adsense-middle" className="w-full max-w-[728px] px-2" />
     </div>
   );
 }
