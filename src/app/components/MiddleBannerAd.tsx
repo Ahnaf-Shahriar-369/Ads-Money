@@ -1,11 +1,21 @@
+// ...existing code...
 "use client";
 import { useEffect } from "react";
 
-const AD_SLOT_MIDDLE = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MIDDLE || "";
+type AdsByGoogleArray = unknown[];
+
+/* declare adsbygoogle on the Window type instead of using `any` */
+declare global {
+  interface Window {
+    adsbygoogle?: AdsByGoogleArray;
+  }
+}
+
+const AD_SLOT_MIDDLE = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MIDDLE ?? "";
 const TEST_MODE = process.env.NEXT_PUBLIC_ADSENSE_TEST === "1";
 
 /**
- * MiddleBannerAd - AdSense-only
+ * MiddleBannerAd - AdSense-only (no `any` usage)
  */
 export default function MiddleBannerAd() {
   useEffect(() => {
@@ -25,10 +35,10 @@ export default function MiddleBannerAd() {
 
     container.appendChild(ins);
 
-    const pushAd = () => {
+    const pushAd = (): boolean => {
       try {
-        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-        (window as any).adsbygoogle.push({});
+        window.adsbygoogle = window.adsbygoogle ?? [];
+        (window.adsbygoogle as AdsByGoogleArray).push({});
         return true;
       } catch {
         return false;
@@ -56,3 +66,4 @@ export default function MiddleBannerAd() {
     </div>
   );
 }
+// ...existing code...

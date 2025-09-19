@@ -7,12 +7,12 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            // Allows AdSense + Vercel debug/live scripts and permits inline script execution for development.
-            // Tighten for production if desired.
+            // Development-friendly CSP that allows AdSense and related Google telemetry domains.
+            // Remove 'unsafe-inline' in production when possible.
             value: [
               "default-src 'self';",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://www.googletagservices.com https://www.google-analytics.com https://va.vercel-scripts.com https://vercel.live https://cdn.jsdelivr.net;",
-              "script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://va.vercel-scripts.com https://vercel.live;",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://www.googletagservices.com https://www.google-analytics.com https://va.vercel-scripts.com https://vercel.live https://cdn.jsdelivr.net https://ep2.adtrafficquality.google;",
+              "script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://va.vercel-scripts.com https://vercel.live https://ep2.adtrafficquality.google;",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
               "img-src * data: blob:;",
               "connect-src *;",

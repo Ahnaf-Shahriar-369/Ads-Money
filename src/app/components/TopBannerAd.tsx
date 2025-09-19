@@ -1,18 +1,27 @@
+// ...existing code...
 "use client";
 import { useEffect } from "react";
 
-const AD_SLOT = process.env.NEXT_PUBLIC_ADSENSE_SLOT || "";
+type AdsByGoogleArray = unknown[];
+
+/* declare adsbygoogle on the Window type instead of using `any` */
+declare global {
+  interface Window {
+    adsbygoogle?: AdsByGoogleArray;
+  }
+}
+
+const AD_SLOT = process.env.NEXT_PUBLIC_ADSENSE_SLOT ?? "";
 const TEST_MODE = process.env.NEXT_PUBLIC_ADSENSE_TEST === "1";
 
 /**
- * TopBannerAd - AdSense only
+ * TopBannerAd - AdSense only (no `any` usage)
  */
 export default function TopBannerAd() {
   useEffect(() => {
     const container = document.getElementById("adsense-top");
     if (!container) return;
 
-    // ensure clean container
     container.innerHTML = "";
 
     const ins = document.createElement("ins");
@@ -26,20 +35,19 @@ export default function TopBannerAd() {
 
     container.appendChild(ins);
 
-    const pushAd = () => {
+    const pushAd = (): boolean => {
       try {
-        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-        (window as any).adsbygoogle.push({});
+        window.adsbygoogle = window.adsbygoogle ?? [];
+        (window.adsbygoogle as AdsByGoogleArray).push({});
         return true;
       } catch {
         return false;
       }
     };
 
-    // Try push now and retry while the library loads
     pushAd();
     let attempts = 0;
-    const maxAttempts = 8;
+    const maxAttempts = 10;
     const intervalId = window.setInterval(() => {
       attempts++;
       if (pushAd() || attempts >= maxAttempts) {
@@ -58,3 +66,4 @@ export default function TopBannerAd() {
     </div>
   );
 }
+// ...existing code...

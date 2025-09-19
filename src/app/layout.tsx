@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
@@ -23,11 +22,9 @@ export default function RootLayout({
           content="ca-pub-9822891837132664"
         />
 
-        {/* Load AdSense library after interactive */}
-        <Script
-          id="adsbygoogle-init"
+        {/* Plain script tag (avoid Next.js data-nscript attribute that AdSense rejects) */}
+        <script
           async
-          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9822891837132664"
           crossOrigin="anonymous"
         />
