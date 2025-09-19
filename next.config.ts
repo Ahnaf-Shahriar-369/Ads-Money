@@ -8,8 +8,8 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            // Allow AdSense core hosts + telemetry used by AdSense runtime.
-            // 'unsafe-inline' kept for development convenience; remove for production if you can use nonces/hashes.
+            // Development-friendly CSP allowing AdSense runtime and telemetry.
+            // Remove 'unsafe-inline' for production if you can adopt nonces/hashes.
             value: [
               "default-src 'self';",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://www.googletagservices.com https://www.google-analytics.com https://va.vercel-scripts.com https://vercel.live https://cdn.jsdelivr.net https://ep2.adtrafficquality.google https://www.google.com;",

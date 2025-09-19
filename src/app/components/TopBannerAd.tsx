@@ -15,7 +15,7 @@ const AD_SLOT = process.env.NEXT_PUBLIC_ADSENSE_SLOT ?? "";
 const TEST_MODE = process.env.NEXT_PUBLIC_ADSENSE_TEST === "1";
 
 /**
- * TopBannerAd - AdSense only (no `any` usage)
+ * TopBannerAd - AdSense only (typed, no `any`)
  */
 export default function TopBannerAd() {
   useEffect(() => {
@@ -45,6 +45,7 @@ export default function TopBannerAd() {
       }
     };
 
+    // initial attempt + retries while adsbygoogle library loads
     pushAd();
     let attempts = 0;
     const maxAttempts = 10;

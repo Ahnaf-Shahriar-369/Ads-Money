@@ -15,7 +15,7 @@ const AD_SLOT_MIDDLE = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MIDDLE ?? "";
 const TEST_MODE = process.env.NEXT_PUBLIC_ADSENSE_TEST === "1";
 
 /**
- * MiddleBannerAd - AdSense-only (no `any` usage)
+ * MiddleBannerAd - AdSense-only (typed, no `any`)
  */
 export default function MiddleBannerAd() {
   useEffect(() => {
