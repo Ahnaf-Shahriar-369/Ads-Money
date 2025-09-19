@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 type AdsByGoogleArray = unknown[];
 
-/* declare adsbygoogle on the Window type instead of using `any` */
+/* declare adsbygoogle on the Window type (no `any`) */
 declare global {
   interface Window {
     adsbygoogle?: AdsByGoogleArray;
