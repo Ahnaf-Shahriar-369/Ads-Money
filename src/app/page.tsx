@@ -2,7 +2,7 @@
 import Image from "next/image";
 import TopBannerAd from "./components/TopBannerAd";
 import MiddleBannerAd from "./components/MiddleBannerAd";
-// BottomBannerAd removed per request
+import BottomBannerAd from "./components/BottomBannerAd";
 
 export default function Page() {
   const jsonLd = {
@@ -47,7 +47,7 @@ export default function Page() {
       id: 5,
       title: "ক্রিপ্টোকারেন্সির সুবিধা কী কী?",
       content:
-        "যখন ক্রিপ্টোকারেন্সি বিনিময়ের মাধ্যম হিসেবে আসে, তখন ঐতিহ্যবাচক মুদ্রার তুলনায় এর কিছু সুবিধা রয়েছে। একটি সুবিধা হলো গোপনীয়তা। যদিও ক্রিপ্টোকারেন্সি পেমেন্ট পাবলিক রেকর্ডে থাকে এবং যে কেউ লেনদেনের তথ্য দেখতে এবং ক্রিপ্টো ওয়ালেটের বিষয়বস্তু দেখতে পারে, আপনাকে কোনও ব্যক্তিগত তথ্য প্রদান করতে হবে না। ক্রিপ্টোকারেন্সির আরেকটি সুবিধা হল এটি বিশ্বব্যাপী, তাই বৈদেশিক মুদ্রার হার গণনা বা পরিশোধ করার কোনও প্রয়োজন নেই।",
+        "যখন ক্রিপ্টোকারেন্সি বিনিময়ের মাধ্যম হিসেবে আসে, তখন ঐতিহ্যবাচক মুদ্রার তুলনায় এর কিছু সুবিধা রয়েছে। একটি সুবিধা হলো গোপনীয়তা। যদিও ক্রিপ্টোকারেন্সি পেমেন্ট пабলিক রেকর্ডে থাকে এবং যে কেউ লেনদেনের তথ্য দেখতে এবং ক্রিপ্টো ওয়ালেটের বিষয়বস্তু দেখতে পারে, আপনাকে কোনও ব্যক্তিগত তথ্য প্রদান করতে হবে না। ক্রিপ্টোকারেন্সির আরেকটি সুবিধা হল এটি বিশ্বব্যাপী, তাই বৈদেশিক মুদ্রার হার গণনা বা পরিশোধ করার কোনও প্রয়োজন নেই।",
     },
     {
       id: 6,
@@ -218,7 +218,10 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Bottom banner removed (BottomBannerAd no longer rendered) */}
+      {/* Desktop / tablet bottom banner (hidden on small screens) */}
+      <div className="hidden md:block">
+        <BottomBannerAd adId="bottom-banner-ad-slot" />
+      </div>
 
       <style>{`
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
