@@ -1,3 +1,4 @@
+// ...existing code...
 "use client";
 
 import React, { useEffect } from "react";
@@ -8,6 +9,14 @@ type AdBannerTypes = {
   dataFullWidthResponsive: boolean;
 };
 
+type AdsByGoogleArray = unknown[];
+
+declare global {
+  interface Window {
+    adsbygoogle?: AdsByGoogleArray;
+  }
+}
+
 const AdBanner: React.FC<AdBannerTypes> = ({
   dataAdSlot,
   dataAdFormat,
@@ -15,12 +24,18 @@ const AdBanner: React.FC<AdBannerTypes> = ({
 }) => {
   useEffect(() => {
     try {
-      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
-        {}
-      );
-    } catch (error: any) {
-      // keep console log for debugging; harmless in prod
-      console.log(error?.message ?? error);
+      const ads = window.adsbygoogle ?? [];
+      window.adsbygoogle = ads;
+      ads.push({});
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        // harmless debug logging
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(String(err));
+      }
     }
   }, []);
 
@@ -32,8 +47,9 @@ const AdBanner: React.FC<AdBannerTypes> = ({
       data-ad-slot={dataAdSlot}
       data-ad-format={dataAdFormat}
       data-full-width-responsive={dataFullWidthResponsive ? "true" : "false"}
-    ></ins>
+    />
   );
 };
 
 export default AdBanner;
+// ...existing code...
